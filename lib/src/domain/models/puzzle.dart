@@ -1,9 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:my_puzzle/src/domain/models/position.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as imglib;
 import 'tile.dart';
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 class Puzzle extends Equatable {
   final List<Tile> tiles;
@@ -18,7 +20,8 @@ class Puzzle extends Equatable {
   /// a tile can be moved if is in the same
   /// row or in the same column of emptyPosition
   bool canMove(Position tilePosition) {
-    if (tilePosition.x == emptyPosition.x || tilePosition.y == emptyPosition.y) {
+    if (tilePosition.x == emptyPosition.x ||
+        tilePosition.y == emptyPosition.y) {
       return true;
     }
     return false;
@@ -36,7 +39,8 @@ class Puzzle extends Equatable {
       // right
       if (tile.position.x < emptyPosition.x) {
         for (final e in row) {
-          if (e.position.x < tile.position.x || e.position.x > emptyPosition.x) {
+          if (e.position.x < tile.position.x ||
+              e.position.x > emptyPosition.x) {
             continue;
           }
           copy[e.value - 1] = e.move(
@@ -49,7 +53,8 @@ class Puzzle extends Equatable {
       } else {
         // left
         for (final e in row) {
-          if (e.position.x > tile.position.x || e.position.x < emptyPosition.x) {
+          if (e.position.x > tile.position.x ||
+              e.position.x < emptyPosition.x) {
             continue;
           }
           copy[e.value - 1] = e.move(
@@ -69,7 +74,8 @@ class Puzzle extends Equatable {
       // bottom
       if (tile.position.y < emptyPosition.y) {
         for (final e in column) {
-          if (e.position.y > emptyPosition.y || e.position.y < tile.position.y) {
+          if (e.position.y > emptyPosition.y ||
+              e.position.y < tile.position.y) {
             continue;
           }
           copy[e.value - 1] = e.move(
@@ -82,8 +88,8 @@ class Puzzle extends Equatable {
       } else {
         // top
         for (final e in column) {
-          if (e.position.y < emptyPosition.y || e.position.y > tile.position.y) {
-
+          if (e.position.y < emptyPosition.y ||
+              e.position.y > tile.position.y) {
             continue;
           }
           copy[e.value - 1] = e.move(
@@ -103,7 +109,11 @@ class Puzzle extends Equatable {
 
   /// creates a sorted puzzle
   factory Puzzle.create(int crossAxisCount) {
-    // Image inputImage = Image.asset('lib/resources/SoCCat1.jpg');
+    // await rootBundle.load('assets/images/lena.png');
+    // ui.Image inputImage = ui.Image.asset('lib/resources/SoCCat1.jpg');
+    // var byteData = await inputImage.toByteData(format: ImageByteFormat.png);
+    // inputImage.toByteData();
+    // imglib.Image image = imglib.decodeImage(inputImage.toByteData());
     // List<Image> image = splitImage(inputImage, crossAxisCount, crossAxisCount);
 
     // final int xLength = (inputImage.width / crossAxisCount).round();
@@ -133,7 +143,8 @@ class Puzzle extends Equatable {
     );
     for (int y = 1; y <= crossAxisCount; y++) {
       for (int x = 1; x <= crossAxisCount; x++) {
-        final add = !(x == crossAxisCount && y == crossAxisCount); // excludes the last element
+        final add = !(x == crossAxisCount &&
+            y == crossAxisCount); // excludes the last element
         if (add) {
           final position = Position(x: x, y: y);
           // final splitImage = outputImageList[value - 1];
@@ -247,7 +258,8 @@ class Puzzle extends Equatable {
 
   bool isSolved() {
     final crossAxisCount = math.sqrt(tiles.length + 1).toInt();
-    if (emptyPosition.x == crossAxisCount && emptyPosition.y == crossAxisCount) {
+    if (emptyPosition.x == crossAxisCount &&
+        emptyPosition.y == crossAxisCount) {
       for (final tile in tiles) {
         if (tile.position != tile.correctPosition) {
           return false;

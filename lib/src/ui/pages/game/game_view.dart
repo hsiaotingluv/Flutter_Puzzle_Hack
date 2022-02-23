@@ -31,21 +31,16 @@ class GameView extends StatelessWidget {
         return controller;
       },
       child: Scaffold(
-        backgroundColor: Color(0xff191919),
+        backgroundColor: Color(0xffadd8f2),
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-            title: Image(
-              image: new ExactAssetImage('lib/resources/logo.png'),
-              height: 100.0,
-              width: 100.0,
-              alignment: FractionalOffset.center),
-            elevation: 0,
-            backgroundColor: Color(0x44000000),
-          ),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
+              Image.asset(
+                'lib/resources/logo.png',
+                height: 80,
+              ),
               TimeAndMoves(),
               Padding(
                 padding: EdgeInsets.all(20),

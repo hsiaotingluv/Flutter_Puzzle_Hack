@@ -11,10 +11,8 @@ class TimeAndMoves extends StatelessWidget {
     final controller = context.watch<GameController>();
     final state = controller.state;
     final time = Provider.of<GameController>(context, listen: false).time;
-    return Container (
-      color: Color(0xfff15025),
-      child:
-      Row(
+    return Container(
+        child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ValueListenableBuilder<int>(
@@ -24,9 +22,9 @@ class TimeAndMoves extends StatelessWidget {
               children: [
                 icon!,
                 Padding(
-                  padding: EdgeInsets.fromLTRB(10, 20, 20, 30),
-                  child: Text(parseTime(time),
-                  style: TextStyle(fontSize: 20))),
+                    padding: EdgeInsets.fromLTRB(10, 30, 20, 30),
+                    child:
+                        Text(parseTime(time), style: TextStyle(fontSize: 20))),
               ],
             );
           },
@@ -35,41 +33,43 @@ class TimeAndMoves extends StatelessWidget {
           ),
         ),
         Container(
-        padding: const EdgeInsets.all(10.0),
-        //color: Color(0xff507DBC),
-        decoration: BoxDecoration(
-          color: Color(0xff507DBC),
-          border: Border.all(
-            color: Color(0xff507DBC),
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(10))
-        ),
-        child:Selector<GameController, int>(
-          builder: (_, moves, __) {
-            return Text("Moves: $moves", style: TextStyle(fontSize: 20, fontFamily: 'Gotham', fontWeight: FontWeight.bold, color: Colors.white));
-          },
-          selector: (_, controller) => controller.state.moves,
-        )
-      ),
+            padding: const EdgeInsets.all(10.0),
+            //color: Color(0xff507DBC),
+            // decoration: BoxDecoration(
+            //     color: Color(0xff507DBC),
+            //     border: Border.all(
+            //       color: Color(0xff507DBC),
+            //     ),
+            //     borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Selector<GameController, int>(
+              builder: (_, moves, __) {
+                return Text("Moves: $moves",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Gotham',
+                        fontWeight: FontWeight.bold));
+              },
+              selector: (_, controller) => controller.state.moves,
+            )),
         DropdownButton<int>(
-            items: [3, 4, 5, 6]
-                .map(
-                  (e) => DropdownMenuItem(
-                    child: Text("${e}x$e", style: TextStyle(fontSize: 20)),
-                    value: e,
-                  ),
-                )
-                .toList(),
-            onChanged: (crossAxisCount) {
-              if (crossAxisCount != null && crossAxisCount != state.crossAxisCount) {
-                controller.changeGrid(crossAxisCount);
-              }
-            },
-            value: state.crossAxisCount,
-          ),
-          const SizedBox(height: 10),
+          items: [3, 4, 5, 6]
+              .map(
+                (e) => DropdownMenuItem(
+                  child: Text("${e}x$e", style: TextStyle(fontSize: 20)),
+                  value: e,
+                ),
+              )
+              .toList(),
+          onChanged: (crossAxisCount) {
+            if (crossAxisCount != null &&
+                crossAxisCount != state.crossAxisCount) {
+              controller.changeGrid(crossAxisCount);
+            }
+          },
+          value: state.crossAxisCount,
+        ),
+        const SizedBox(height: 10),
       ],
-    )
-    );
+    ));
   }
 }
