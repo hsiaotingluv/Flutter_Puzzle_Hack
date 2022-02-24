@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:my_puzzle/src/domain/models/position.dart';
-import 'package:image/image.dart' as imglib;
-import 'dart:ui' as ui;
 
 class Tile extends Equatable {
   final int value;
   final Position position;
   final Position correctPosition;
-  final ui.Image image;
+  final Image image;
 
   const Tile(
       {required this.value,

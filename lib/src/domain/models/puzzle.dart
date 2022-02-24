@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:my_puzzle/src/domain/models/position.dart';
@@ -108,31 +110,29 @@ class Puzzle extends Equatable {
   }
 
   /// creates a sorted puzzle
-  factory Puzzle.create(int crossAxisCount) {
-    // await rootBundle.load('assets/images/lena.png');
-    // ui.Image inputImage = ui.Image.asset('lib/resources/SoCCat1.jpg');
-    // var byteData = await inputImage.toByteData(format: ImageByteFormat.png);
-    // inputImage.toByteData();
-    // imglib.Image image = imglib.decodeImage(inputImage.toByteData());
-    // List<Image> image = splitImage(inputImage, crossAxisCount, crossAxisCount);
+  factory Puzzle.create(int crossAxisCount, List<int> imageList) {
+    imglib.Image? image = imglib.decodeImage(imageList);
 
-    // final int xLength = (inputImage.width / crossAxisCount).round();
-    // final int yLength = (inputImage.height / crossAxisCount).round();
-    // var splitImages = [];
+    int x = 0, y = 0;
+    int width = (image!.width / crossAxisCount).round();
+    int height = (image.height / crossAxisCount).round();
 
-    // for (int y = 0; y < crossAxisCount; y++) {
-    //   for (int x = 0; x < crossAxisCount; x++) {
-    //     splitImages.add(
-    //       imglib.copyCrop(inputImage, x, y, x * xLength, y * yLength),
-    //     );
-    //   };
-    // }
+    List<imglib.Image> splitImages = List.empty(growable: true);
+    for (int i = 0; i < crossAxisCount; i++) {
+      for (int j = 0; j < crossAxisCount; j++) {
+        splitImages.add(imglib.copyCrop(image, x, y, width, height));
+        x += width;
+      }
+      x = 0;
+      y += height;
+    }
 
-    //Convert image from image package to Image Widget to display
-    // var outputImageList = [];
-    // for (imglib.Image img in splitImages) {
-    //   outputImageList.add(Image.memory(imglib.encodeJpg(img)));
-    // }
+    List<Image> outputImageList = List.empty(growable: true);
+    for (var img in splitImages) {
+      Image image = Image.memory(Uint8List.fromList(imglib.encodeJpg(img)),
+          fit: BoxFit.contain);
+      outputImageList.add(image);
+    }
 
     int value = 1;
     final tiles = <Tile>[];
@@ -147,13 +147,12 @@ class Puzzle extends Equatable {
             y == crossAxisCount); // excludes the last element
         if (add) {
           final position = Position(x: x, y: y);
-          // final splitImage = outputImageList[value - 1];
+          final splitImage = outputImageList[value - 1];
           final tile = Tile(
-            value: value,
-            position: position,
-            correctPosition: position,
-            // image: splitImage
-          );
+              value: value,
+              position: position,
+              correctPosition: position,
+              image: splitImage);
           tiles.add(tile);
           value++;
         }

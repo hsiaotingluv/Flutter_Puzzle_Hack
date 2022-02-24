@@ -6,13 +6,20 @@ import 'package:my_puzzle/src/domain/models/tile.dart';
 import 'package:my_puzzle/src/ui/pages/game/controller/game_state.dart';
 
 class GameController extends ChangeNotifier {
-  GameState _state = GameState(
-    crossAxisCount: 3,
-    puzzle: Puzzle.create(3),
-    solved: false,
-    moves: 0,
-    status: GameStatus.created,
-  );
+  late GameState _state;
+  late final List<int> imageList;
+
+  GameController(List<int> image) {
+    imageList = image;
+
+    _state = GameState(
+      crossAxisCount: 3,
+      puzzle: Puzzle.create(3, imageList),
+      solved: false,
+      moves: 0,
+      status: GameStatus.created,
+    );
+  }
 
   final ValueNotifier<int> time = ValueNotifier(0);
 
@@ -68,7 +75,7 @@ class GameController extends ChangeNotifier {
     time.value = 0;
     final newState = GameState(
       crossAxisCount: crossAxisCount,
-      puzzle: Puzzle.create(crossAxisCount),
+      puzzle: Puzzle.create(crossAxisCount, imageList),
       solved: false,
       moves: 0,
       status: GameStatus.created,

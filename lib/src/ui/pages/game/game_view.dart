@@ -9,13 +9,14 @@ import 'package:my_puzzle/src/ui/utils/time_parser.dart';
 import 'package:provider/provider.dart';
 
 class GameView extends StatelessWidget {
-  const GameView({Key? key}) : super(key: key);
+  final List<int> imageList;
+  const GameView({Key? key, required this.imageList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) {
-        final controller = GameController();
+        final controller = GameController(imageList);
         controller.onFinish.listen(
           (_) {
             Timer(
@@ -31,7 +32,7 @@ class GameView extends StatelessWidget {
         return controller;
       },
       child: Scaffold(
-        backgroundColor: Color(0xffadd8f2),
+        backgroundColor: const Color(0xffadd8f2),
         extendBodyBehindAppBar: true,
         body: SafeArea(
           child: Column(
@@ -41,15 +42,15 @@ class GameView extends StatelessWidget {
                 'lib/resources/logo.png',
                 height: 80,
               ),
-              TimeAndMoves(),
-              Padding(
+              const TimeAndMoves(),
+              const Padding(
                 padding: EdgeInsets.all(20),
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: PuzzleInteractor(),
                 ),
               ),
-              GameButtons(),
+              const GameButtons(),
             ],
           ),
         ),

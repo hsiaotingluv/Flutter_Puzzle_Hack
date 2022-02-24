@@ -27,23 +27,41 @@ class PuzzleTile extends StatelessWidget {
           padding: const EdgeInsets.all(5.0),
           decoration: BoxDecoration(
             border: Border.all(color: const Color(0xffa1c6ea), width: 0),
-            borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
             color: const Color(0xff507DBC),
           ),
           margin: const EdgeInsets.all(1),
           width: size - 2,
           height: size - 2,
           alignment: Alignment.center,
-          child: Text(
-            tile.value.toString(),
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Color(0xffffffff),
-            ),
+          child: Stack(
+            children: [
+              ClipRRect(
+                child: tile.image,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  tile.value.toString(),
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
+
+// Stack(
+//             children: [
+//               tile.image,
+//               
+//             ],
+//           ),
