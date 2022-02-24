@@ -16,14 +16,11 @@ class GameButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-          child: ElevatedButton(
-            // padding: const EdgeInsets.all(20),
-            // textColor: Colors.white,
+              child: ElevatedButton(
             onPressed: controller.shuffle,
             child: Text(
               state.status == GameStatus.created ? "START" : "RESET",
               style: TextStyle(fontSize: 20),
-              
             ),
             style: ElevatedButton.styleFrom(
               fixedSize: const Size(240, 50),
@@ -33,10 +30,8 @@ class GameButtons extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(10),
             ),
-          )
-          ),
+          )),
           const SizedBox(width: 20),
-         
         ],
       ),
     );

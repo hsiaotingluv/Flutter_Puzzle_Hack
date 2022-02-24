@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_puzzle/src/domain/models/tile.dart';
-import 'package:image/image.dart' as imglib;
 
 class PuzzleTile extends StatelessWidget {
   final Tile tile;
@@ -58,10 +57,3 @@ class PuzzleTile extends StatelessWidget {
     );
   }
 }
-
-// Stack(
-//             children: [
-//               tile.image,
-//               
-//             ],
-//           ),

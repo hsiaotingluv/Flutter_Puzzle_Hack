@@ -52,7 +52,7 @@ class TimeAndMoves extends StatelessWidget {
               selector: (_, controller) => controller.state.moves,
             )),
         DropdownButton<int>(
-          items: [3, 4, 5, 6]
+          items: [3, 4, 5]
               .map(
                 (e) => DropdownMenuItem(
                   child: Text("${e}x$e", style: TextStyle(fontSize: 20)),

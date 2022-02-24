@@ -1,13 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/services.dart';
 import 'package:my_puzzle/src/domain/models/position.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as imglib;
 import 'tile.dart';
 import 'dart:math' as math;
-import 'dart:ui' as ui;
 
 class Puzzle extends Equatable {
   final List<Tile> tiles;
@@ -19,8 +17,8 @@ class Puzzle extends Equatable {
     required this.emptyPosition,
   });
 
-  /// a tile can be moved if is in the same
-  /// row or in the same column of emptyPosition
+  // a tile can be moved if is in the same
+  // row or in the same column of emptyPosition
   bool canMove(Position tilePosition) {
     if (tilePosition.x == emptyPosition.x ||
         tilePosition.y == emptyPosition.y) {
@@ -29,7 +27,7 @@ class Puzzle extends Equatable {
     return false;
   }
 
-  /// moves one or more tile vertically or horizontally
+  // moves one or more tile vertically or horizontally
   Puzzle move(Tile tile) {
     final copy = [...tiles];
     // left or right
@@ -109,7 +107,7 @@ class Puzzle extends Equatable {
     );
   }
 
-  /// creates a sorted puzzle
+  // creates a sorted puzzle
   factory Puzzle.create(int crossAxisCount, List<int> imageList) {
     imglib.Image? image = imglib.decodeImage(imageList);
 
@@ -165,7 +163,7 @@ class Puzzle extends Equatable {
     );
   }
 
-  /// shuffle the puzzle tiles
+  // shuffle the puzzle tiles
   Puzzle shuffle() {
     final values = List.generate(
       tiles.length,
@@ -213,7 +211,7 @@ class Puzzle extends Equatable {
   bool _isSolvable(List<int> values) {
     final n = math.sqrt(values.length);
 
-    /// inversions
+    // inversions
     int inversions = 0;
     int y = 1;
     int emptyPositionY = 1;
@@ -244,7 +242,6 @@ class Puzzle extends Equatable {
       return inversions % 2 == 0;
     } else {
       // is even
-
       final yFromBottom = n - emptyPositionY + 1;
 
       if (yFromBottom % 2 == 0) {
